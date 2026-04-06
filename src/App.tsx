@@ -21,6 +21,17 @@ export default function App() {
   const { learningStates } = useGameStore();
 
   useEffect(() => {
+    const handleGuestLogin = () => setView('dashboard');
+    const handleGoToLogin = () => setView('login');
+    window.addEventListener('guest-login', handleGuestLogin);
+    window.addEventListener('go-to-login', handleGoToLogin);
+    return () => {
+      window.removeEventListener('guest-login', handleGuestLogin);
+      window.removeEventListener('go-to-login', handleGoToLogin);
+    };
+  }, []);
+
+  useEffect(() => {
     if (!loading) {
       if (user) {
         if (storeUser) {
@@ -30,8 +41,6 @@ export default function App() {
         } else {
           setView('profile-setup');
         }
-      } else if (view !== 'welcome') {
-        setView('login');
       }
     }
   }, [user, storeUser, loading, view]);
@@ -40,7 +49,7 @@ export default function App() {
     if (user) {
       setView(storeUser ? 'dashboard' : 'profile-setup');
     } else {
-      setView('login');
+      setView('dashboard');
     }
   };
 

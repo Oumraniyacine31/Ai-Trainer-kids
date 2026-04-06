@@ -16,8 +16,19 @@ interface GameStore {
   clearLastUnlockedBadge: () => void;
 }
 
+const GUEST_USER: UserProfile = {
+  uid: 'guest',
+  displayName: 'Guest Trainer',
+  avatar: 'https://api.dicebear.com/7.x/bottts/svg?seed=guest',
+  xp: 0,
+  level: 1,
+  badges: [],
+  lastPlayed: new Date().toISOString(),
+  role: 'client',
+};
+
 export const useGameStore = create<GameStore>((set) => ({
-  user: null,
+  user: GUEST_USER,
   learningStates: {
     ai: { categoryId: 'ai', confidence: 0, correctCount: 0, totalCount: 0, level: 1 },
     hardware: { categoryId: 'hardware', confidence: 0, correctCount: 0, totalCount: 0, level: 1 },
@@ -28,15 +39,15 @@ export const useGameStore = create<GameStore>((set) => ({
   isMusicEnabled: true,
   lastUnlockedBadge: null,
 
-  setUser: (user) => set({ user }),
+  setUser: (user) => set({ user: user || GUEST_USER }),
   
   updateXP: (amount) => set((state) => {
-    if (!state.user) return state;
-    const newXP = state.user.xp + amount;
+    const currentUser = state.user || GUEST_USER;
+    const newXP = currentUser.xp + amount;
     const newLevel = Math.floor(newXP / 100) + 1;
     return {
       user: {
-        ...state.user,
+        ...currentUser,
         xp: newXP,
         level: newLevel,
       }
@@ -45,8 +56,9 @@ export const useGameStore = create<GameStore>((set) => ({
 
   updateLearningState: (categoryId, isCorrect) => set((state) => {
     const current = state.learningStates[categoryId];
-    if (!current || !state.user) return state;
+    if (!current) return state;
 
+    const currentUser = state.user || GUEST_USER;
     const newCorrectCount = current.correctCount + (isCorrect ? 1 : 0);
     const newTotalCount = current.totalCount + 1;
     
@@ -54,7 +66,7 @@ export const useGameStore = create<GameStore>((set) => ({
     const newLevel = Math.min(4, Math.floor(newCorrectCount / 3) + 1);
 
     // Badge unlocking logic
-    let newBadges = [...state.user.badges];
+    let newBadges = [...currentUser.badges];
     let unlockedBadgeId = null;
 
     const badgeMap: Record<string, string> = {
@@ -72,7 +84,7 @@ export const useGameStore = create<GameStore>((set) => ({
 
     return {
       user: {
-        ...state.user,
+        ...currentUser,
         badges: newBadges
       },
       lastUnlockedBadge: unlockedBadgeId,

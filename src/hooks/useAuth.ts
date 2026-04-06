@@ -15,8 +15,7 @@ import {
   updateDoc,
   getDocFromServer
 } from 'firebase/firestore';
-import { initializeApp } from 'firebase/app';
-import firebaseConfig from '../../firebase-applet-config.json';
+import { auth, db } from '../lib/firebase';
 import { UserProfile, LearningState } from '../types';
 import { useGameStore } from '../store/useGameStore';
 
@@ -70,11 +69,6 @@ function handleFirestoreError(error: unknown, operationType: OperationType, path
   console.error('Firestore Error: ', JSON.stringify(errInfo));
   throw new Error(JSON.stringify(errInfo));
 }
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-export const db = getFirestore(app, firebaseConfig.firestoreDatabaseId);
 
 // Test connection to Firestore
 async function testConnection() {

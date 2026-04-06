@@ -139,7 +139,7 @@ export const HARDWARE: TrainingItem[] = [
   {
     id: 'hw1',
     category: 'hardware',
-    label: 'CPU',
+    label: 'CPU (Processor)',
     imageUrl: 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&q=80&w=800',
     pronunciation: 'C P U',
     sentence: 'The CPU is the brain of the computer.',
@@ -149,7 +149,7 @@ export const HARDWARE: TrainingItem[] = [
     id: 'hw1_2',
     category: 'hardware',
     label: 'Keyboard',
-    imageUrl: 'https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?auto=format&fit=crop&q=80&w=800',
+    imageUrl: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&q=80&w=800',
     pronunciation: 'Keyboard',
     sentence: 'You use a keyboard to type letters and numbers.',
     difficulty: 1
@@ -158,7 +158,7 @@ export const HARDWARE: TrainingItem[] = [
     id: 'hw1_3',
     category: 'hardware',
     label: 'Mouse',
-    imageUrl: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&q=80&w=800',
+    imageUrl: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&q=80&w=800',
     pronunciation: 'Mouse',
     sentence: 'A mouse helps you click and move things on the screen.',
     difficulty: 1
@@ -175,7 +175,7 @@ export const HARDWARE: TrainingItem[] = [
   {
     id: 'hw2_2',
     category: 'hardware',
-    label: 'RAM',
+    label: 'RAM (Memory)',
     imageUrl: 'https://images.unsplash.com/photo-1562976540-1502c2145186?auto=format&fit=crop&q=80&w=800',
     pronunciation: 'RAM',
     sentence: 'RAM is the short-term memory of the computer.',
@@ -202,7 +202,7 @@ export const HARDWARE: TrainingItem[] = [
   {
     id: 'hw3_2',
     category: 'hardware',
-    label: 'GPU',
+    label: 'GPU (Graphics Card)',
     imageUrl: 'https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&q=80&w=800',
     pronunciation: 'G P U',
     sentence: 'The GPU helps the computer show beautiful pictures.',
@@ -239,7 +239,7 @@ export const HARDWARE: TrainingItem[] = [
     id: 'hw4_3',
     category: 'hardware',
     label: 'Network Card',
-    imageUrl: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=800',
+    imageUrl: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc51?auto=format&fit=crop&q=80&w=800',
     pronunciation: 'Network Card',
     sentence: 'A network card lets the computer connect to the internet.',
     difficulty: 4

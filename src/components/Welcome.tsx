@@ -70,6 +70,15 @@ export function Welcome({ onStart }: WelcomeProps) {
               <Sparkles className="group-hover:rotate-12 transition-transform" />
             </span>
           </Button>
+
+          <div className="mt-6">
+            <button 
+              onClick={() => window.dispatchEvent(new CustomEvent('go-to-login'))}
+              className="text-slate-400 font-bold hover:text-blue-500 transition-colors"
+            >
+              Sign in to save your progress
+            </button>
+          </div>
         </motion.div>
       </div>
     </div>

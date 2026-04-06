@@ -187,21 +187,40 @@ export function Trainer({ allCategoryItems, currentLevel, categoryId, onComplete
             className="space-y-6"
           >
             <Card className="p-0 overflow-hidden border-b-8 border-slate-200">
-              <div className="aspect-video relative bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center p-8 sm:p-12 text-center">
+              <div 
+                className="aspect-video relative flex items-center justify-center p-8 sm:p-12 text-center overflow-hidden"
+              >
+                {/* Background Image with Blur/Overlay */}
+                {currentItem.imageUrl && (
+                  <>
+                    <img 
+                      src={currentItem.imageUrl} 
+                      alt="" 
+                      className="absolute inset-0 w-full h-full object-cover"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-[2px]" />
+                  </>
+                )}
+                {!currentItem.imageUrl && (
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-indigo-600" />
+                )}
+
                 <motion.h2 
                   key={currentItem.id + "_q"}
                   initial={{ scale: 0.9, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
-                  className="text-2xl sm:text-4xl font-black text-white leading-tight drop-shadow-lg"
+                  className="relative z-10 text-2xl sm:text-4xl font-black text-white leading-tight drop-shadow-lg"
                 >
                   {currentItem.question || "What is this?"}
                 </motion.h2>
-                <div className="absolute top-4 right-4">
+                
+                <div className="absolute top-4 right-4 z-20">
                   <Button 
                     variant="secondary" 
                     size="sm" 
                     onClick={() => speak(currentItem.question || currentItem.label)}
-                    className="rounded-full w-12 h-12 p-0 bg-white/20 hover:bg-white/30 border-white/40 text-white"
+                    className="rounded-full w-12 h-12 p-0 bg-white/20 hover:bg-white/30 border-white/40 text-white backdrop-blur-md"
                   >
                     <Volume2 size={24} />
                   </Button>

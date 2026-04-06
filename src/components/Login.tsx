@@ -38,7 +38,7 @@ export function Login({ onLogin, isLoading }: LoginProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
-          className="pt-8"
+          className="pt-8 space-y-4"
         >
           <Button 
             variant="primary" 
@@ -51,6 +51,15 @@ export function Login({ onLogin, isLoading }: LoginProps) {
               SIGN IN WITH GOOGLE
               <LogIn className="group-hover:translate-x-1 transition-transform" />
             </span>
+          </Button>
+
+          <Button 
+            variant="secondary" 
+            size="lg" 
+            onClick={() => window.dispatchEvent(new CustomEvent('guest-login'))}
+            className="w-full rounded-2xl border-2 border-slate-200 text-slate-600 font-black"
+          >
+            PLAY AS GUEST
           </Button>
           
           <div className="mt-8 flex items-center justify-center gap-2 text-slate-400 font-bold text-sm">
