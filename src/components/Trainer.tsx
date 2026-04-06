@@ -8,6 +8,7 @@ import { Button } from './Button';
 import { Card } from './Card';
 import { useSpeech } from '../hooks/useSpeech';
 import { useSound } from '../hooks/useSound';
+import { BADGES } from '../constants';
 import confetti from 'canvas-confetti';
 import { Brain, Sparkles, CheckCircle2, XCircle, Volume2 } from 'lucide-react';
 import { cn } from '../lib/utils';
@@ -31,23 +32,32 @@ export function Trainer({ allCategoryItems, currentLevel, categoryId, onComplete
   const [showFeedback, setShowFeedback] = useState(false);
   const [initialLevel] = useState(currentLevel);
 
-  const { updateLearningState, updateXP, learningStates } = useGameStore();
+  const { updateLearningState, updateXP, learningStates, lastUnlockedBadge } = useGameStore();
   const { speak } = useSpeech();
   const { playSound } = useSound();
 
   const currentItem = items[currentIndex];
   const learningState = learningStates[categoryId];
 
+  // Detect Badge Unlock
+  useEffect(() => {
+    if (lastUnlockedBadge) {
+      setRobotState('celebratory');
+      playSound('badge');
+      speak(`YAY! You unlocked the ${BADGES.find(b => b.id === lastUnlockedBadge)?.name} badge! You're an expert!`);
+    }
+  }, [lastUnlockedBadge, playSound, speak]);
+
   // Detect AI Level Up
   useEffect(() => {
-    if (learningState.level > initialLevel && !selectedOption) {
+    if (learningState.level > initialLevel && !selectedOption && !lastUnlockedBadge) {
       setRobotState('celebratory');
       playSound('levelup');
       speak(`WOW! My AI brain just leveled up to level ${learningState.level}! I'm getting so smart!`);
       const timer = setTimeout(() => setRobotState('thinking'), 4000);
       return () => clearTimeout(timer);
     }
-  }, [learningState.level, initialLevel, playSound]);
+  }, [learningState.level, initialLevel, playSound, lastUnlockedBadge]);
 
   // Reset robot to thinking when new item appears
   useEffect(() => {
@@ -104,6 +114,16 @@ export function Trainer({ allCategoryItems, currentLevel, categoryId, onComplete
     }
   };
 
+  const getLevelName = (lvl: number) => {
+    switch (lvl) {
+      case 1: return 'Novice';
+      case 2: return 'Intermediate';
+      case 3: return 'Advanced';
+      case 4: return 'Expert';
+      default: return 'Novice';
+    }
+  };
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
       {/* Left Side: Robot & AI Status */}
@@ -111,10 +131,15 @@ export function Trainer({ allCategoryItems, currentLevel, categoryId, onComplete
         <Card className="flex flex-col items-center py-10">
           <Robot state={robotState} />
           <div className="mt-8 text-center space-y-2">
-            <h3 className="text-xl font-black text-slate-800">AI BRAIN STATUS</h3>
-            <div className="flex items-center justify-center gap-2 text-blue-500 font-bold">
-              <Brain size={20} />
-              <span>Level {learningState.level}</span>
+            <h3 className="text-xl font-black text-slate-800 uppercase tracking-tight">AI BRAIN STATUS</h3>
+            <div className="flex flex-col items-center justify-center gap-1 text-blue-500 font-black">
+              <div className="flex items-center gap-2">
+                <Brain size={20} />
+                <span>Level {learningState.level}</span>
+              </div>
+              <span className="text-xs uppercase tracking-widest text-slate-400">
+                {getLevelName(learningState.level)}
+              </span>
             </div>
           </div>
           
@@ -127,9 +152,9 @@ export function Trainer({ allCategoryItems, currentLevel, categoryId, onComplete
             />
             <ProgressBar 
               value={learningState.correctCount} 
-              max={learningState.totalCount || 1} 
-              label="Learning Accuracy" 
-              color="bg-green-400"
+              max={12} 
+              label="Badge Progress (12 items)" 
+              color="bg-yellow-400"
             />
           </div>
         </Card>

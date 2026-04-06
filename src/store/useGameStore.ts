@@ -6,12 +6,14 @@ interface GameStore {
   learningStates: Record<string, LearningState>;
   isSoundEnabled: boolean;
   isMusicEnabled: boolean;
+  lastUnlockedBadge: string | null;
   
   setUser: (user: UserProfile | null) => void;
   updateXP: (amount: number) => void;
   updateLearningState: (categoryId: string, isCorrect: boolean) => void;
   toggleSound: () => void;
   toggleMusic: () => void;
+  clearLastUnlockedBadge: () => void;
 }
 
 export const useGameStore = create<GameStore>((set) => ({
@@ -24,6 +26,7 @@ export const useGameStore = create<GameStore>((set) => ({
   },
   isSoundEnabled: true,
   isMusicEnabled: true,
+  lastUnlockedBadge: null,
 
   setUser: (user) => set({ user }),
   
@@ -42,20 +45,37 @@ export const useGameStore = create<GameStore>((set) => ({
 
   updateLearningState: (categoryId, isCorrect) => set((state) => {
     const current = state.learningStates[categoryId];
-    if (!current) return state;
+    if (!current || !state.user) return state;
 
     const newCorrectCount = current.correctCount + (isCorrect ? 1 : 0);
     const newTotalCount = current.totalCount + 1;
     
-    // Simple confidence calculation: percentage of correct answers weighted by total
-    // We'll use a slightly more complex formula to simulate "learning"
-    // Confidence = (Correct / Total) * 100, but capped at 100
     const newConfidence = Math.min(100, Math.round((newCorrectCount / newTotalCount) * 100));
-    
-    // Level up category if confidence is high and total count is enough
-    const newLevel = Math.floor(newTotalCount / 5) + 1;
+    const newLevel = Math.min(4, Math.floor(newCorrectCount / 3) + 1);
+
+    // Badge unlocking logic
+    let newBadges = [...state.user.badges];
+    let unlockedBadgeId = null;
+
+    const badgeMap: Record<string, string> = {
+      ai: 'ai_expert',
+      hardware: 'hardware_hero',
+      software: 'software_wizard',
+      internet: 'security_guard'
+    };
+
+    const badgeId = badgeMap[categoryId];
+    if (newCorrectCount >= 12 && !newBadges.includes(badgeId)) {
+      newBadges.push(badgeId);
+      unlockedBadgeId = badgeId;
+    }
 
     return {
+      user: {
+        ...state.user,
+        badges: newBadges
+      },
+      lastUnlockedBadge: unlockedBadgeId,
       learningStates: {
         ...state.learningStates,
         [categoryId]: {
@@ -71,4 +91,5 @@ export const useGameStore = create<GameStore>((set) => ({
 
   toggleSound: () => set((state) => ({ isSoundEnabled: !state.isSoundEnabled })),
   toggleMusic: () => set((state) => ({ isMusicEnabled: !state.isMusicEnabled })),
+  clearLastUnlockedBadge: () => set({ lastUnlockedBadge: null }),
 }));

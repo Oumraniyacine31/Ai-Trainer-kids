@@ -10,6 +10,7 @@ import { useAuth } from './hooks/useAuth';
 import { AI_BASICS, HARDWARE, SOFTWARE, INTERNET } from './constants';
 import { motion, AnimatePresence } from 'motion/react';
 import { useGameStore } from './store/useGameStore';
+import { BadgeUnlockModal } from './components/BadgeUnlockModal';
 
 type View = 'welcome' | 'login' | 'profile-setup' | 'dashboard' | 'trainer' | 'parent-dashboard';
 
@@ -82,6 +83,7 @@ export default function App() {
 
   return (
     <Layout onParentClick={handleParentDashboard}>
+      <BadgeUnlockModal />
       <AnimatePresence mode="wait">
         {view === 'welcome' && (
           <motion.div

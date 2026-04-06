@@ -22,6 +22,16 @@ export function Dashboard({ onSelectCategory }: DashboardProps) {
     { id: 'internet', name: 'Security Guard', icon: <Globe size={32} />, color: 'bg-green-500', items: INTERNET },
   ];
 
+  const getLevelName = (lvl: number) => {
+    switch (lvl) {
+      case 1: return 'Novice';
+      case 2: return 'Intermediate';
+      case 3: return 'Advanced';
+      case 4: return 'Expert';
+      default: return 'Novice';
+    }
+  };
+
   return (
     <div className="space-y-12">
       {/* Hero Section */}
@@ -90,31 +100,47 @@ export function Dashboard({ onSelectCategory }: DashboardProps) {
               <div className="p-6 flex-1 flex flex-col">
                 <div className="flex justify-between items-start mb-4">
                   <div>
-                    <h4 className="text-xl font-black text-slate-800">{cat.name}</h4>
+                    <div className="flex items-center gap-2">
+                      <h4 className="text-xl font-black text-slate-800">{cat.name}</h4>
+                      {user?.badges.includes(BADGES.find(b => b.id.startsWith(cat.id))?.id || '') && (
+                        <div className="w-5 h-5 bg-yellow-400 rounded-full flex items-center justify-center text-[10px] shadow-sm">
+                          🏆
+                        </div>
+                      )}
+                    </div>
                     <p className="text-sm font-bold text-slate-400 uppercase tracking-wider">
                       {cat.items.length} Items Available
                     </p>
                   </div>
-                  <div className="bg-slate-100 px-3 py-1 rounded-full text-xs font-black text-slate-500">
-                    LVL {learningStates[cat.id].level}
+                  <div className="flex flex-col items-end">
+                    <div className="bg-slate-100 px-3 py-1 rounded-full text-xs font-black text-slate-500">
+                      LVL {learningStates[cat.id].level}
+                    </div>
+                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1">
+                      {getLevelName(learningStates[cat.id].level)}
+                    </span>
                   </div>
                 </div>
                 
-                <div className="mt-auto space-y-4">
-                  <ProgressBar 
-                    value={learningStates[cat.id].confidence} 
-                    max={100} 
-                    color={cat.color}
-                  />
-                  <Button 
-                    variant="primary" 
-                    className={cn("w-full gap-2", cat.color, "hover:opacity-90 border-none")}
-                    onClick={() => onSelectCategory(cat.id)}
-                  >
-                    <Play size={20} fill="currentColor" />
-                    START TRAINING
-                  </Button>
-                </div>
+                  <div className="mt-auto space-y-4">
+                    <div className="flex justify-between items-center text-xs font-black text-slate-400 uppercase tracking-wider">
+                      <span>Badge Progress</span>
+                      <span>{learningStates[cat.id].correctCount}/12</span>
+                    </div>
+                    <ProgressBar 
+                      value={learningStates[cat.id].correctCount} 
+                      max={12} 
+                      color={user?.badges.includes(BADGES.find(b => b.id.startsWith(cat.id))?.id || '') ? 'bg-yellow-400' : cat.color}
+                    />
+                    <Button 
+                      variant="primary" 
+                      className={cn("w-full gap-2", cat.color, "hover:opacity-90 border-none")}
+                      onClick={() => onSelectCategory(cat.id)}
+                    >
+                      <Play size={20} fill="currentColor" />
+                      START TRAINING
+                    </Button>
+                  </div>
               </div>
             </Card>
           ))}

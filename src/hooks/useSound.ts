@@ -29,7 +29,7 @@ export function useSound() {
     };
   }, [isMusicEnabled]);
 
-  const playSound = useCallback((type: 'success' | 'error' | 'click' | 'levelup') => {
+  const playSound = useCallback((type: 'success' | 'error' | 'click' | 'levelup' | 'badge') => {
     if (!isSoundEnabled) return;
 
     const audio = new Audio();
@@ -47,6 +47,10 @@ export function useSound() {
         break;
       case 'levelup':
         audio.src = 'https://assets.mixkit.co/active_storage/sfx/2018/2018-preview.mp3';
+        break;
+      case 'badge':
+        // A more triumphant sound for badge unlock
+        audio.src = 'https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3';
         break;
     }
     audio.play().catch(() => {});

@@ -20,6 +20,15 @@ export const AI_BASICS: TrainingItem[] = [
     difficulty: 1
   },
   {
+    id: 'ai1_3',
+    category: 'ai',
+    label: 'Computer',
+    imageUrl: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&q=80&w=800',
+    pronunciation: 'Computer',
+    sentence: 'A computer is an electronic device for storing and processing data.',
+    difficulty: 1
+  },
+  {
     id: 'ai2',
     category: 'ai',
     label: 'Machine Learning',
@@ -35,6 +44,15 @@ export const AI_BASICS: TrainingItem[] = [
     imageUrl: 'https://images.unsplash.com/photo-1551288049-bbbda546697a?auto=format&fit=crop&q=80&w=800',
     pronunciation: 'Data',
     sentence: 'Data is information that computers use to learn.',
+    difficulty: 2
+  },
+  {
+    id: 'ai2_3',
+    category: 'ai',
+    label: 'Pattern Recognition',
+    imageUrl: 'https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&q=80&w=800',
+    pronunciation: 'Pattern Recognition',
+    sentence: 'AI can find patterns in pictures and numbers.',
     difficulty: 2
   },
   {
@@ -56,6 +74,15 @@ export const AI_BASICS: TrainingItem[] = [
     difficulty: 3
   },
   {
+    id: 'ai3_3',
+    category: 'ai',
+    label: 'Natural Language',
+    imageUrl: 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&q=80&w=800',
+    pronunciation: 'Natural Language',
+    sentence: 'AI can understand human speech and writing.',
+    difficulty: 3
+  },
+  {
     id: 'ai4',
     category: 'ai',
     label: 'Generative AI',
@@ -71,6 +98,15 @@ export const AI_BASICS: TrainingItem[] = [
     imageUrl: 'https://images.unsplash.com/photo-1676299081847-824916de030a?auto=format&fit=crop&q=80&w=800',
     pronunciation: 'Large Language Model',
     sentence: 'An LLM is an AI that understands and talks like a human.',
+    difficulty: 4
+  },
+  {
+    id: 'ai4_3',
+    category: 'ai',
+    label: 'Artificial General Intelligence',
+    imageUrl: 'https://images.unsplash.com/photo-1531746790731-6c087fecd05a?auto=format&fit=crop&q=80&w=800',
+    pronunciation: 'A G I',
+    sentence: 'AGI is a future AI that can do any human task.',
     difficulty: 4
   }
 ];
@@ -95,6 +131,15 @@ export const HARDWARE: TrainingItem[] = [
     difficulty: 1
   },
   {
+    id: 'hw1_3',
+    category: 'hardware',
+    label: 'Mouse',
+    imageUrl: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&q=80&w=800',
+    pronunciation: 'Mouse',
+    sentence: 'A mouse helps you click and move things on the screen.',
+    difficulty: 1
+  },
+  {
     id: 'hw2',
     category: 'hardware',
     label: 'Motherboard',
@@ -110,6 +155,15 @@ export const HARDWARE: TrainingItem[] = [
     imageUrl: 'https://images.unsplash.com/photo-1562976540-1502c2145186?auto=format&fit=crop&q=80&w=800',
     pronunciation: 'RAM',
     sentence: 'RAM is the short-term memory of the computer.',
+    difficulty: 2
+  },
+  {
+    id: 'hw2_3',
+    category: 'hardware',
+    label: 'Monitor',
+    imageUrl: 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?auto=format&fit=crop&q=80&w=800',
+    pronunciation: 'Monitor',
+    sentence: 'The monitor is the screen where you see your work.',
     difficulty: 2
   },
   {
@@ -131,6 +185,15 @@ export const HARDWARE: TrainingItem[] = [
     difficulty: 3
   },
   {
+    id: 'hw3_3',
+    category: 'hardware',
+    label: 'Sound Card',
+    imageUrl: 'https://images.unsplash.com/photo-1555664424-778a1e5e1b48?auto=format&fit=crop&q=80&w=800',
+    pronunciation: 'Sound Card',
+    sentence: 'A sound card lets the computer play music and sounds.',
+    difficulty: 3
+  },
+  {
     id: 'hw4',
     category: 'hardware',
     label: 'Power Supply',
@@ -146,6 +209,15 @@ export const HARDWARE: TrainingItem[] = [
     imageUrl: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=800',
     pronunciation: 'Cooling Fan',
     sentence: 'The fan keeps the computer from getting too hot.',
+    difficulty: 4
+  },
+  {
+    id: 'hw4_3',
+    category: 'hardware',
+    label: 'Network Card',
+    imageUrl: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=800',
+    pronunciation: 'Network Card',
+    sentence: 'A network card lets the computer connect to the internet.',
     difficulty: 4
   }
 ];
@@ -170,6 +242,15 @@ export const SOFTWARE: TrainingItem[] = [
     difficulty: 1
   },
   {
+    id: 'sw1_3',
+    category: 'software',
+    label: 'File',
+    imageUrl: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&q=80&w=800',
+    pronunciation: 'File',
+    sentence: 'A file is a piece of information stored on a computer.',
+    difficulty: 1
+  },
+  {
     id: 'sw2',
     category: 'software',
     label: 'Web Browser',
@@ -185,6 +266,15 @@ export const SOFTWARE: TrainingItem[] = [
     imageUrl: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&q=80&w=800',
     pronunciation: 'Folder',
     sentence: 'A folder helps you organize your computer files.',
+    difficulty: 2
+  },
+  {
+    id: 'sw2_3',
+    category: 'software',
+    label: 'Programmer',
+    imageUrl: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800',
+    pronunciation: 'Programmer',
+    sentence: 'A programmer is a person who writes computer code.',
     difficulty: 2
   },
   {
@@ -206,6 +296,15 @@ export const SOFTWARE: TrainingItem[] = [
     difficulty: 3
   },
   {
+    id: 'sw3_3',
+    category: 'software',
+    label: 'Framework',
+    imageUrl: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=800',
+    pronunciation: 'Framework',
+    sentence: 'A framework is a set of tools for building apps.',
+    difficulty: 3
+  },
+  {
     id: 'sw4',
     category: 'software',
     label: 'API',
@@ -221,6 +320,15 @@ export const SOFTWARE: TrainingItem[] = [
     imageUrl: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&q=80&w=800',
     pronunciation: 'Encryption',
     sentence: 'Encryption scrambles data to keep it secret.',
+    difficulty: 4
+  },
+  {
+    id: 'sw4_3',
+    category: 'software',
+    label: 'Malware',
+    imageUrl: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800',
+    pronunciation: 'Malware',
+    sentence: 'Malware is a bad program that can hurt your computer.',
     difficulty: 4
   }
 ];
@@ -245,6 +353,15 @@ export const INTERNET: TrainingItem[] = [
     difficulty: 1
   },
   {
+    id: 'int1_3',
+    category: 'internet',
+    label: 'Link',
+    imageUrl: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80&w=800',
+    pronunciation: 'Link',
+    sentence: 'A link takes you to another page when you click it.',
+    difficulty: 1
+  },
+  {
     id: 'int2',
     category: 'internet',
     label: 'IP Address',
@@ -260,6 +377,15 @@ export const INTERNET: TrainingItem[] = [
     imageUrl: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&q=80&w=800',
     pronunciation: 'Router',
     sentence: 'A router sends internet signals to your devices.',
+    difficulty: 2
+  },
+  {
+    id: 'int2_3',
+    category: 'internet',
+    label: 'Email',
+    imageUrl: 'https://images.unsplash.com/photo-1557200134-90327ee9fafa?auto=format&fit=crop&q=80&w=800',
+    pronunciation: 'Email',
+    sentence: 'Email is a way to send messages over the internet.',
     difficulty: 2
   },
   {
@@ -281,6 +407,15 @@ export const INTERNET: TrainingItem[] = [
     difficulty: 3
   },
   {
+    id: 'int3_3',
+    category: 'internet',
+    label: 'Server',
+    imageUrl: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc51?auto=format&fit=crop&q=80&w=800',
+    pronunciation: 'Server',
+    sentence: 'A server is a computer that provides data to other computers.',
+    difficulty: 3
+  },
+  {
     id: 'int4',
     category: 'internet',
     label: 'DNS',
@@ -296,6 +431,15 @@ export const INTERNET: TrainingItem[] = [
     imageUrl: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=800',
     pronunciation: 'Cybersecurity',
     sentence: 'Cybersecurity keeps you safe on the internet.',
+    difficulty: 4
+  },
+  {
+    id: 'int4_3',
+    category: 'internet',
+    label: 'Protocol',
+    imageUrl: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc51?auto=format&fit=crop&q=80&w=800',
+    pronunciation: 'Protocol',
+    sentence: 'A protocol is a set of rules for how data is sent.',
     difficulty: 4
   }
 ];
