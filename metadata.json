@@ -1,0 +1,5 @@
+{
+  "name": "AI Trainer Kids",
+  "description": "An interactive educational game where kids teach an AI robot to recognize animals, colors, and objects while learning English vocabulary.",
+  "requestFramePermissions": ["microphone"]
+}

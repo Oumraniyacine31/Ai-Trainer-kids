@@ -1,0 +1,26 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "Stores user progress, XP, and badges.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "displayName": { "type": "string" },
+        "avatar": { "type": "string" },
+        "xp": { "type": "integer" },
+        "level": { "type": "integer" },
+        "badges": { "type": "array", "items": { "type": "string" } },
+        "lastPlayed": { "type": "string", "format": "date-time" },
+        "role": { "type": "string", "enum": ["admin", "client"] }
+      },
+      "required": ["uid", "displayName", "xp", "level", "role"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile document"
+    }
+  }
+}
