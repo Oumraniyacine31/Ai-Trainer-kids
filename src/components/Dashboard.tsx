@@ -2,9 +2,10 @@ import { motion } from 'motion/react';
 import { Card } from './Card';
 import { ProgressBar } from './ProgressBar';
 import { Button } from './Button';
+import { Robot } from './Robot';
 import { useGameStore } from '../store/useGameStore';
-import { ANIMALS, COLORS, OBJECTS, BADGES } from '../constants';
-import { Trophy, Star, Brain, Play, Award, LayoutGrid, Palette, Dog } from 'lucide-react';
+import { AI_BASICS, HARDWARE, SOFTWARE, INTERNET, BADGES } from '../constants';
+import { Trophy, Star, Brain, Play, Award, Cpu, Code, Globe } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 interface DashboardProps {
@@ -15,9 +16,10 @@ export function Dashboard({ onSelectCategory }: DashboardProps) {
   const { user, learningStates } = useGameStore();
 
   const categories = [
-    { id: 'animal', name: 'Animal Trainer', icon: <Dog size={32} />, color: 'bg-orange-500', items: ANIMALS },
-    { id: 'color', name: 'Color Trainer', icon: <Palette size={32} />, color: 'bg-purple-500', items: COLORS },
-    { id: 'object', name: 'Object Trainer', icon: <LayoutGrid size={32} />, color: 'bg-blue-500', items: OBJECTS },
+    { id: 'ai', name: 'AI Specialist', icon: <Brain size={32} />, color: 'bg-blue-500', items: AI_BASICS },
+    { id: 'hardware', name: 'Hardware Hero', icon: <Cpu size={32} />, color: 'bg-orange-500', items: HARDWARE },
+    { id: 'software', name: 'Software Wizard', icon: <Code size={32} />, color: 'bg-purple-500', items: SOFTWARE },
+    { id: 'internet', name: 'Security Guard', icon: <Globe size={32} />, color: 'bg-green-500', items: INTERNET },
   ];
 
   return (
@@ -60,36 +62,13 @@ export function Dashboard({ onSelectCategory }: DashboardProps) {
           </div>
         </div>
 
-        <div className="relative">
+        <div className="relative flex items-center justify-center">
           <motion.div
-            animate={{ y: [0, -20, 0] }}
-            transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
             className="relative z-10"
           >
-            <Card className="p-8 border-b-8 border-slate-200">
-              <div className="flex items-center gap-6 mb-6">
-                <div className="w-20 h-20 bg-blue-500 rounded-3xl flex items-center justify-center text-white shadow-xl">
-                  <Brain size={48} />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-black text-slate-800">AI BRAIN STATUS</h3>
-                  <p className="text-slate-500 font-bold">Global Confidence: {Math.round(
-                    Object.values(learningStates).reduce((acc, curr) => acc + curr.confidence, 0) / 3
-                  )}%</p>
-                </div>
-              </div>
-              <div className="space-y-4">
-                {categories.map(cat => (
-                  <ProgressBar 
-                    key={cat.id}
-                    value={learningStates[cat.id].confidence}
-                    max={100}
-                    label={cat.name}
-                    color={cat.color}
-                  />
-                ))}
-              </div>
-            </Card>
+            <Robot state="idle" className="w-64 h-64" />
           </motion.div>
           <div className="absolute -bottom-4 -right-4 w-full h-full bg-blue-100 rounded-3xl -z-10" />
         </div>

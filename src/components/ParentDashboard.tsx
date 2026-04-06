@@ -52,13 +52,18 @@ export function ParentDashboard({ onBack }: ParentDashboardProps) {
             {Object.values(learningStates).map((state) => (
               <div key={state.categoryId} className="space-y-2">
                 <div className="flex justify-between items-end">
-                  <h4 className="font-black text-slate-700 capitalize">{state.categoryId}s</h4>
+                  <h4 className="font-black text-slate-700 uppercase tracking-tight">{state.categoryId}</h4>
                   <span className="text-xs font-bold text-slate-400">Level {state.level}</span>
                 </div>
                 <ProgressBar 
                   value={state.confidence} 
                   max={100} 
-                  color={state.categoryId === 'animal' ? 'bg-orange-500' : state.categoryId === 'color' ? 'bg-purple-500' : 'bg-blue-500'}
+                  color={
+                    state.categoryId === 'ai' ? 'bg-blue-500' : 
+                    state.categoryId === 'hardware' ? 'bg-orange-500' : 
+                    state.categoryId === 'software' ? 'bg-purple-500' : 
+                    'bg-green-500'
+                  }
                 />
                 <div className="flex justify-between text-[10px] font-black text-slate-400 uppercase tracking-widest">
                   <span>{state.correctCount} Correct</span>
@@ -100,9 +105,9 @@ export function ParentDashboard({ onBack }: ParentDashboardProps) {
       <Card className="bg-slate-900 text-white border-slate-800">
         <h3 className="text-xl font-black mb-2">Educational Insight</h3>
         <p className="text-slate-400 font-bold leading-relaxed">
-          Your child is showing strong progress in <span className="text-blue-400">Animals</span>. 
-          They have a 90% accuracy rate in identifying mammals. 
-          Consider encouraging them to try the <span className="text-purple-400">Colors</span> module to balance their learning.
+          Your child is showing strong progress in <span className="text-blue-400">AI Concepts</span>. 
+          They have a high accuracy rate in identifying Neural Networks. 
+          Consider encouraging them to try the <span className="text-purple-400">Software</span> module to understand how these systems are built.
         </p>
       </Card>
     </div>

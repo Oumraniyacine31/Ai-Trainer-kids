@@ -7,7 +7,7 @@ import { Trainer } from './components/Trainer';
 import { ProfileSetup } from './components/ProfileSetup';
 import { ParentDashboard } from './components/ParentDashboard';
 import { useAuth } from './hooks/useAuth';
-import { ANIMALS, COLORS, OBJECTS } from './constants';
+import { AI_BASICS, HARDWARE, SOFTWARE, INTERNET } from './constants';
 import { motion, AnimatePresence } from 'motion/react';
 import { useGameStore } from './store/useGameStore';
 
@@ -61,11 +61,12 @@ export default function App() {
     setView('dashboard');
   };
 
-  const getCategoryItems = (id: string) => {
+  const getAllCategoryItems = (id: string) => {
     switch (id) {
-      case 'animal': return ANIMALS;
-      case 'color': return COLORS;
-      case 'object': return OBJECTS;
+      case 'ai': return AI_BASICS;
+      case 'hardware': return HARDWARE;
+      case 'software': return SOFTWARE;
+      case 'internet': return INTERNET;
       default: return [];
     }
   };
@@ -138,7 +139,8 @@ export default function App() {
           >
             <Trainer 
               categoryId={selectedCategory}
-              items={getCategoryItems(selectedCategory)}
+              allCategoryItems={getAllCategoryItems(selectedCategory)}
+              currentLevel={learningStates[selectedCategory]?.level || 1}
               onComplete={handleTrainingComplete}
             />
           </motion.div>

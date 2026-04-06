@@ -7,36 +7,62 @@ import { ProgressBar } from './ProgressBar';
 import { Button } from './Button';
 import { Card } from './Card';
 import { useSpeech } from '../hooks/useSpeech';
+import { useSound } from '../hooks/useSound';
 import confetti from 'canvas-confetti';
 import { Brain, Sparkles, CheckCircle2, XCircle, Volume2 } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 interface TrainerProps {
-  items: TrainingItem[];
+  allCategoryItems: TrainingItem[];
+  currentLevel: number;
   categoryId: string;
   onComplete: () => void;
 }
 
-export function Trainer({ items, categoryId, onComplete }: TrainerProps) {
+export function Trainer({ allCategoryItems, currentLevel, categoryId, onComplete }: TrainerProps) {
+  const items = useMemo(() => {
+    return allCategoryItems.filter(item => item.difficulty <= currentLevel);
+  }, [allCategoryItems, currentLevel]);
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
-  const [robotState, setRobotState] = useState<'idle' | 'happy' | 'thinking' | 'sad'>('idle');
+  const [robotState, setRobotState] = useState<'idle' | 'happy' | 'thinking' | 'sad' | 'confused' | 'celebratory'>('thinking');
   const [showFeedback, setShowFeedback] = useState(false);
+  const [initialLevel] = useState(currentLevel);
 
   const { updateLearningState, updateXP, learningStates } = useGameStore();
   const { speak } = useSpeech();
+  const { playSound } = useSound();
 
   const currentItem = items[currentIndex];
   const learningState = learningStates[categoryId];
 
-  // Generate options (current item + 2 random items from the same category)
+  // Detect AI Level Up
+  useEffect(() => {
+    if (learningState.level > initialLevel && !selectedOption) {
+      setRobotState('celebratory');
+      playSound('levelup');
+      speak(`WOW! My AI brain just leveled up to level ${learningState.level}! I'm getting so smart!`);
+      const timer = setTimeout(() => setRobotState('thinking'), 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [learningState.level, initialLevel, playSound]);
+
+  // Reset robot to thinking when new item appears
+  useEffect(() => {
+    if (!selectedOption) {
+      setRobotState('thinking');
+    }
+  }, [currentIndex, selectedOption]);
+
+  // Generate options (current item + 3 random items from the same category)
   const options = useMemo(() => {
-    const others = items.filter(i => i.id !== currentItem.id);
+    const others = allCategoryItems.filter(i => i.id !== currentItem.id);
     const shuffled = [...others].sort(() => 0.5 - Math.random());
-    const selected = shuffled.slice(0, 2);
+    const selected = shuffled.slice(0, 3);
     return [...selected, currentItem].sort(() => 0.5 - Math.random());
-  }, [currentItem, items]);
+  }, [currentItem, allCategoryItems]);
 
   const handleOptionSelect = (label: string) => {
     if (selectedOption) return;
@@ -48,19 +74,21 @@ export function Trainer({ items, categoryId, onComplete }: TrainerProps) {
 
     if (correct) {
       setRobotState('happy');
+      playSound('success');
       updateLearningState(categoryId, true);
       updateXP(10);
-      speak(`Great job! That is a ${currentItem.label}. I learned something new!`);
+      speak(`Great job!`);
       confetti({
-        particleCount: 100,
-        spread: 70,
+        particleCount: 150,
+        spread: 100,
         origin: { y: 0.6 },
-        colors: ['#3B82F6', '#10B981', '#F59E0B']
+        colors: ['#3B82F6', '#10B981', '#F59E0B', '#EC4899']
       });
     } else {
-      setRobotState('sad');
+      setRobotState('confused');
+      playSound('error');
       updateLearningState(categoryId, false);
-      speak(`Oh no! That's not quite right. This is a ${currentItem.label}. Let's try again!`);
+      speak(`Hmm... I'm confused! This is a ${currentItem.label}. Let's try again!`);
     }
   };
 
@@ -69,7 +97,7 @@ export function Trainer({ items, categoryId, onComplete }: TrainerProps) {
       setCurrentIndex(prev => prev + 1);
       setSelectedOption(null);
       setIsCorrect(null);
-      setRobotState('idle');
+      setRobotState('thinking');
       setShowFeedback(false);
     } else {
       onComplete();
@@ -153,7 +181,7 @@ export function Trainer({ items, categoryId, onComplete }: TrainerProps) {
               </div>
             </Card>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {options.map((option) => (
                 <Button
                   key={option.label}

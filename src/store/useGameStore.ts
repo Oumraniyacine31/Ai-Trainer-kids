@@ -17,9 +17,10 @@ interface GameStore {
 export const useGameStore = create<GameStore>((set) => ({
   user: null,
   learningStates: {
-    animal: { categoryId: 'animal', confidence: 0, correctCount: 0, totalCount: 0, level: 1 },
-    color: { categoryId: 'color', confidence: 0, correctCount: 0, totalCount: 0, level: 1 },
-    object: { categoryId: 'object', confidence: 0, correctCount: 0, totalCount: 0, level: 1 },
+    ai: { categoryId: 'ai', confidence: 0, correctCount: 0, totalCount: 0, level: 1 },
+    hardware: { categoryId: 'hardware', confidence: 0, correctCount: 0, totalCount: 0, level: 1 },
+    software: { categoryId: 'software', confidence: 0, correctCount: 0, totalCount: 0, level: 1 },
+    internet: { categoryId: 'internet', confidence: 0, correctCount: 0, totalCount: 0, level: 1 },
   },
   isSoundEnabled: true,
   isMusicEnabled: true,

@@ -11,11 +11,12 @@ export interface UserProfile {
 
 export interface TrainingItem {
   id: string;
-  category: 'animal' | 'color' | 'object';
+  category: 'ai' | 'hardware' | 'software' | 'internet';
   label: string;
   imageUrl: string;
   pronunciation: string;
   sentence: string;
+  difficulty: 1 | 2 | 3 | 4;
 }
 
 export interface LearningState {

@@ -2,23 +2,67 @@ import { motion } from 'motion/react';
 import { cn } from '../lib/utils';
 
 interface RobotProps {
-  state: 'idle' | 'happy' | 'thinking' | 'sad';
+  state: 'idle' | 'happy' | 'thinking' | 'sad' | 'confused' | 'celebratory';
   className?: string;
 }
 
 export function Robot({ state, className }: RobotProps) {
   const variants: any = {
-    idle: { y: [0, -10, 0], transition: { repeat: Infinity, duration: 3, ease: "easeInOut" } },
-    happy: { scale: [1, 1.1, 1], rotate: [0, 5, -5, 0], transition: { repeat: Infinity, duration: 0.5 } },
-    thinking: { rotate: [0, 2, -2, 0], transition: { repeat: Infinity, duration: 1 } },
-    sad: { y: [0, 5, 0], opacity: 0.8 },
+    idle: { 
+      y: [0, -10, 0], 
+      transition: { repeat: Infinity, duration: 3, ease: "easeInOut" } 
+    },
+    happy: { 
+      scale: [1, 1.1, 1], 
+      rotate: [0, 5, -5, 0], 
+      transition: { repeat: Infinity, duration: 0.5 } 
+    },
+    thinking: { 
+      rotate: [0, -5, 5, 0], 
+      x: [-2, 2, -2, 0],
+      transition: { repeat: Infinity, duration: 2, ease: "easeInOut" } 
+    },
+    sad: { 
+      y: [0, 5, 0], 
+      opacity: 0.8,
+      transition: { duration: 0.5 }
+    },
+    confused: {
+      rotate: [-10, 10, -10, 10, 0],
+      x: [-5, 5, -5, 5, 0],
+      transition: { repeat: Infinity, duration: 0.8 }
+    },
+    celebratory: {
+      y: [0, -40, 0],
+      scale: [1, 1.2, 1],
+      rotate: [0, 360],
+      transition: { 
+        y: { repeat: Infinity, duration: 0.6, ease: "easeOut" },
+        rotate: { repeat: Infinity, duration: 1, ease: "linear" },
+        scale: { repeat: Infinity, duration: 0.6 }
+      }
+    }
   };
 
-  const eyeVariants = {
-    idle: { scaleY: 1 },
+  const eyeVariants: any = {
+    idle: { scaleY: 1, x: 0 },
     happy: { scaleY: 0.2, transition: { repeat: Infinity, duration: 0.5 } },
-    thinking: { x: [-2, 2, -2], transition: { repeat: Infinity, duration: 1 } },
+    thinking: { 
+      x: [-4, 4, -4], 
+      y: [-2, 2, -2],
+      transition: { repeat: Infinity, duration: 1.5, ease: "easeInOut" } 
+    },
     sad: { scaleY: 0.5, opacity: 0.5 },
+    confused: {
+      rotate: [0, 180, 360],
+      scale: [1, 1.5, 1],
+      transition: { repeat: Infinity, duration: 0.5 }
+    },
+    celebratory: {
+      scale: [1, 1.5, 1],
+      opacity: [1, 0.5, 1],
+      transition: { repeat: Infinity, duration: 0.3 }
+    }
   };
 
   return (
@@ -46,9 +90,11 @@ export function Robot({ state, className }: RobotProps) {
           {/* Mouth */}
           <motion.div 
             className={cn(
-              "w-12 h-1 bg-cyan-400 rounded-full shadow-[0_0_5px_rgba(34,211,238,0.5)]",
-              state === 'happy' && "h-4 rounded-t-none rounded-b-full",
-              state === 'sad' && "h-1 opacity-50"
+              "w-12 h-1 bg-cyan-400 rounded-full shadow-[0_0_5px_rgba(34,211,238,0.5)] transition-all duration-300",
+              (state === 'happy' || state === 'celebratory') && "h-4 rounded-t-none rounded-b-full",
+              state === 'sad' && "h-1 opacity-50",
+              state === 'confused' && "w-4 h-4 rounded-full",
+              state === 'thinking' && "w-6 h-1 opacity-80"
             )}
           />
         </div>
@@ -65,9 +111,17 @@ export function Robot({ state, className }: RobotProps) {
       <div className="absolute -top-6 left-1/2 -translate-x-1/2 flex flex-col items-center">
         <div className="w-1 h-6 bg-blue-700" />
         <motion.div 
-          className="w-4 h-4 rounded-full bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.8)]"
-          animate={{ opacity: [1, 0.5, 1] }}
-          transition={{ repeat: Infinity, duration: 1 }}
+          className={cn(
+            "w-4 h-4 rounded-full shadow-[0_0_10px_rgba(239,68,68,0.8)] transition-colors duration-300",
+            state === 'thinking' ? "bg-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.8)]" : "bg-red-500"
+          )}
+          animate={state === 'thinking' ? { 
+            scale: [1, 1.5, 1],
+            opacity: [1, 0.5, 1]
+          } : { 
+            opacity: [1, 0.5, 1] 
+          }}
+          transition={{ repeat: Infinity, duration: state === 'thinking' ? 0.5 : 1 }}
         />
       </div>
       
