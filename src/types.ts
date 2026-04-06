@@ -17,6 +17,8 @@ export interface TrainingItem {
   pronunciation: string;
   sentence: string;
   difficulty: 1 | 2 | 3 | 4;
+  question?: string;
+  distractors?: string[];
 }
 
 export interface LearningState {

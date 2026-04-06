@@ -68,6 +68,13 @@ export function Trainer({ allCategoryItems, currentLevel, categoryId, onComplete
 
   // Generate options (current item + 3 random items from the same category)
   const options = useMemo(() => {
+    if (currentItem.distractors && currentItem.distractors.length > 0) {
+      const allOptions = [
+        { label: currentItem.label },
+        ...currentItem.distractors.map(d => ({ label: d }))
+      ];
+      return allOptions.sort(() => 0.5 - Math.random());
+    }
     const others = allCategoryItems.filter(i => i.id !== currentItem.id);
     const shuffled = [...others].sort(() => 0.5 - Math.random());
     const selected = shuffled.slice(0, 3);
@@ -98,7 +105,6 @@ export function Trainer({ allCategoryItems, currentLevel, categoryId, onComplete
       setRobotState('confused');
       playSound('error');
       updateLearningState(categoryId, false);
-      speak(`Hmm... I'm confused! This is a ${currentItem.label}. Let's try again!`);
     }
   };
 
@@ -181,28 +187,31 @@ export function Trainer({ allCategoryItems, currentLevel, categoryId, onComplete
             className="space-y-6"
           >
             <Card className="p-0 overflow-hidden border-b-8 border-slate-200">
-              <div className="aspect-video relative">
-                <img 
-                  src={currentItem.imageUrl} 
-                  alt="Training Target"
-                  className="w-full h-full object-cover"
-                  referrerPolicy="no-referrer"
-                />
+              <div className="aspect-video relative bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center p-8 sm:p-12 text-center">
+                <motion.h2 
+                  key={currentItem.id + "_q"}
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  className="text-2xl sm:text-4xl font-black text-white leading-tight drop-shadow-lg"
+                >
+                  {currentItem.question || "What is this?"}
+                </motion.h2>
                 <div className="absolute top-4 right-4">
                   <Button 
                     variant="secondary" 
                     size="sm" 
-                    onClick={() => speak(currentItem.label)}
-                    className="rounded-full w-12 h-12 p-0"
+                    onClick={() => speak(currentItem.question || currentItem.label)}
+                    className="rounded-full w-12 h-12 p-0 bg-white/20 hover:bg-white/30 border-white/40 text-white"
                   >
                     <Volume2 size={24} />
                   </Button>
                 </div>
               </div>
               
-              <div className="p-8 text-center">
-                <h2 className="text-3xl font-black text-slate-800 mb-2">What is this?</h2>
-                <p className="text-slate-500 font-bold">Help the AI identify this {categoryId}.</p>
+              <div className="p-6 text-center bg-slate-50">
+                <p className="text-slate-500 font-black uppercase tracking-widest text-xs">
+                  Training Module: {categoryId.toUpperCase()}
+                </p>
               </div>
             </Card>
 
